@@ -1,6 +1,6 @@
 # grunt-blog
 
-> The best Grunt plugin ever.
+> A grunt plugin to generate blog indexes.
 
 ## Getting Started
 This plugin requires Grunt `~0.4.2`
