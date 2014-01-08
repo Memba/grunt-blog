@@ -29,9 +29,6 @@ module.exports = function(grunt) {
         var d = new Date(),
             archive = [],
             options = this.options({
-                punctuation: '.',
-                separator: ',',
-
                 //configuration
                 indexUrl: 'http://blogengine.memba.com/index.html',
                 route: '/#blog/',

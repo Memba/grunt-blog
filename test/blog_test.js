@@ -27,6 +27,7 @@ exports.blog = {
     // setup here if necessary
     done();
   },
+  /*
   default_options: function(test) {
     test.expect(1);
 
@@ -35,14 +36,14 @@ exports.blog = {
     test.equal(actual, expected, 'should describe what the default behavior is.');
 
     test.done();
-  }/*,
+  },*/
   custom_options: function(test) {
     test.expect(1);
 
-    var actual = grunt.file.read('temp/custom_options');
-    var expected = grunt.file.read('test/expected/custom_options');
+    var actual = grunt.file.read('temp/index.rss');
+    var expected = grunt.file.read('test/expected/index.rss');
     test.equal(actual, expected, 'should describe what the custom option(s) behavior is.');
 
     test.done();
-  }*/
+  }
 };

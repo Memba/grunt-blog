@@ -25,25 +25,21 @@ module.exports = function(grunt) {
 
     // Before generating any new files, remove any previously-created files.
     clean: {
-      tests: ['temp']
+      tests: ['temp', 'archive']
     },
 
     // Configuration to be run (and then tested).
     blog: {
+      /*
       default_options: {
         options: {
-        },
-        files: {
-          'temp/default_options': ['test/fixtures/testing', 'test/fixtures/123']
         }
       },
+      */
       custom_options: {
         options: {
-          separator: ': ',
-          punctuation: ' !!!'
-        },
-        files: {
-          'temp/custom_options': ['test/fixtures/testing', 'test/fixtures/123']
+            newsRoot: 'test/fixtures',
+            archiveRoot: 'temp'
         }
       }
     },
