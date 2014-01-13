@@ -17,6 +17,62 @@ exports.init = function(grunt) {
         SPACE = ' ';
 
     /**
+     * Generate a random uuid.
+     *
+     * USAGE: Math.uuid(length, radix)
+     *   length - the desired number of characters
+     *   radix  - the number of allowable values for each character.
+     *
+     * EXAMPLES:
+     *   // No arguments  - returns RFC4122, version 4 ID
+     *   >>> Math.uuid()
+     *   "92329D39-6F5C-4520-ABFC-AAB64544E172"
+     *
+     *   // One argument - returns ID of the specified length
+     *   >>> Math.uuid(15)     // 15 character ID (default base=62)
+     *   "VcydxgltxrVZSTV"
+     *
+     *   // Two arguments - returns ID of the specified length, and radix. (Radix must be <= 62)
+     *   >>> Math.uuid(8, 2)  // 8 character ID (base=2)
+     *   "01001010"
+     *   >>> Math.uuid(8, 10) // 8 character ID (base=10)
+     *   "47473046"
+     *   >>> Math.uuid(8, 16) // 8 character ID (base=16)
+     *   "098F4D35"
+     * Source: http://www.broofa.com/Tools/Math.uuid.js - Copyright (c) 2010 Robert Kieffer
+     * @param len
+     * @param radix
+     * @returns {string}
+     */
+    exports.uuid = function (len, radix) {
+        var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split(''),
+            uuid = [], i;
+            radix = radix || chars.length;
+
+        if (len) {
+            // Compact form
+            for (i = 0; i < len; i++) uuid[i] = chars[0 | Math.random()*radix];
+        } else {
+            // rfc4122, version 4 form
+            var r;
+
+            // rfc4122 requires these characters
+            uuid[8] = uuid[13] = uuid[18] = uuid[23] = '-';
+            uuid[14] = '4';
+
+            // Fill in random data.  At i==19 set the high bits of clock sequence as
+            // per rfc4122, sec. 4.1.5
+            for (i = 0; i < 36; i++) {
+                if (!uuid[i]) {
+                    r = 0 | Math.random()*16;
+                    uuid[i] = chars[(i == 19) ? (r & 0x3) | 0x8 : r];
+                }
+            }
+        }
+        return uuid.join('');
+    };
+
+    /**
      * Returns an object containing metadata properties defined as key: value\n pairs at the beginning of the markdown file
      * Important Note: the following code should remain consistent with the code in memba.markdown.js
      * See: https://github.com/Memba/Memba-Widgets/blob/master/src/js/memba.markdown.js
@@ -72,27 +128,131 @@ exports.init = function(grunt) {
      * @returns {{informations: Array, warnings: Array, errors: Array}}
      */
     exports.validateOptions = function(options) {
-        var ret = {
+        var validation = {
             informations: [],
             warnings: [],
             errors: []
         };
-
-        return ret;
+        if (!options.home) {
+            validation.errors.push('Missing option home. Without home, links cannot work.');
+        }
+        if (!options.route) {
+            validation.errors.push('Missing option route. Without route, links cannot work.');
+        }
+        if (!options.index) {
+            validation.errors.push('Missing option index. Without index, there is no RSS feed .');
+        }
+        if (!options.newsRoot) {
+            validation.warnings.push('Missing option newsRoot. New posts shall be skipped.');
+        }
+        if (options.newsRoot && !grunt.file.isDir(options.newsRoot)) {
+            validation.warnings.push('Directory newsRoot [' + options.newsRoot + '] does not exist. New posts cannot be processed.');
+        }
+        if (!options.archiveRoot) {
+            validation.errors.push('Missing option archiveRoot. An index cannot be built.');
+        }
+        if (options.archiveRoot && !grunt.file.isDir(options.archiveRoot)) {
+            validation.errors.push('Directory archiveRoot [' + options.archiveRoot + '] does not exist. An index cannot be built.');
+        }
+        if (!options.title) {
+            validation.errors.push('Missing option title. Required for an RSS channel.');
+        }
+        if (!options.link) {
+            validation.errors.push('Missing option link. Required for an RSS channel.');
+        }
+        if (!options.description) {
+            validation.errors.push('Missing option description. Required for an RSS channel.');
+        }
+        if (!options.generator) {
+            validation.warnings.push('Missing option generator. Please keep the link to http://blogengine.memba.com');
+        }
+        if (!options.managingEditor) {
+            validation.errors.push('Missing option managingEditor. We need one in case you forget the author in markdown files');
+        }
+        if (!options.pubDate) {
+            validation.errors.push('Missing option pubDate. We need one in case you forget the pubDate in markdown files');
+        }
+        if (!options.lastBuildDate) {
+            validation.warnings.push('Missing option lastBuildDate. Why don\'t you keep today by default?');
+        }
+        return validation;
     };
 
     /**
      * Validate metaData
      * @param metaData
+     * @param options
      * @returns {{informations: Array, warnings: Array, errors: Array}}
      */
-    exports.validateMetaData = function(metaData) {
-        var ret = {
+    exports.validateMetaData = function(metaData, options) {
+        var validation = {
             informations: [],
             warnings: [],
             errors: []
         };
-        return ret;
+        if (!metaData.title) {
+            if(options) {
+                metaData.title = 'A generated title (' + exports.uuid(4,36) + ')';
+                validation.informations.push('Missing title key:value in the md file. A title has been generated.');
+            } else {
+                validation.errors.push('Missing title key:value in the md file. Required for an RSS item.');
+            }
+        }
+        if(!metaData.slug) {
+            metaData.slug = exports.getSlug(metaData.title);
+            //TODO: check that file name matches slug
+        }
+        if (!metaData.description) {
+            if(options) {
+                metaData.description = 'A generated description.';
+                validation.informations.push('Missing title key:value in the md file. A description has been generated.');
+            } else {
+                validation.errors.push('Missing title key:value in the md file. Required for an RSS item.');
+            }
+        }
+        if (!metaData.author) {
+            if(options) {
+                metaData.author = options.managingEditor;
+                validation.informations.push('Missing author key:value in the md file. An author has been generated from option managingEditor.');
+            } else {
+                validation.warnings.push('Missing author key:value in the md file. We need one to display.');
+            }
+        }
+        if (!metaData.category) {
+            if(options) {
+                metaData.category = options.category;
+                validation.informations.push('Missing category key:value in the md file. A category has been generated from option category.');
+            } else {
+                validation.errors.push('Missing category key:value in the md file. We need one to index categories.');
+            }
+        }
+        if (!metaData.pubDate) {
+            if(options) {
+                metaData.pubDate = options.pubDate;
+                validation.informations.push('Missing pubDate key:value in the md file. A pubDate has been generated from option pubDate.');
+            } else {
+                validation.errors.push('Missing pubDate key:value in the md file. We need one to index archives.');
+            }
+        }
+        if (!metaData.guid) { //TODO: check valid guid
+            if(options) {
+                metaData.guid = exports.uuid();
+                validation.informations.push('Missing guid key:value in the md file. A guid has been generated.');
+            } else {
+                validation.errors.push('Missing guid key:value in the md file. We need one to keep track of comments and likes in case you change your title.');
+            }
+        }
+        if (!metaData.link && !options) {
+            validation.errors.push('Missing link key:value in the md file. Required for an RSS item.');
+        } else {
+            if (options) {
+                metaData.link = options.home + options.route + new Date(metaData.pubDate).getFullYear().toString() + '/' + metaData.slug;
+            } else {
+                validation.informations.push('Using recorded link: ' + metaData.link);
+            }
+        }
+        //TODO: Important: comments, enclosures, source
+        return validation;
     };
 
     /**
@@ -122,7 +282,7 @@ exports.init = function(grunt) {
      * @param options
      */
     exports.getTargetPath = function(metaData, options) {
-        return path.join(options.archiveRoot, new Date(metaData.pubDate).getFullYear().toString(), exports.getSlug(metaData.title) + EXT);
+        return path.join(options.archiveRoot, new Date(metaData.pubDate).getFullYear().toString(), metaData.slug + EXT);
     };
 
     /**

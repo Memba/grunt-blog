@@ -11,9 +11,14 @@
 exports.init = function(grunt) {
 
     var exports = {},
+        path = require('path'),
         TAB = '  ',
         LF = '\n',
         MODULE = 'rss.js: ';
+
+    exports.getFilePath = function(options) {
+        return path.join(options.archiveRoot, options.index);
+    };
 
     exports.startFeed = function() {
         grunt.verbose.debug (MODULE + 'Start Feed');
@@ -80,7 +85,7 @@ exports.init = function(grunt) {
         item += TAB + TAB + TAB + '<author>' + data.author + '</author>' + LF;
         item += TAB + TAB + TAB + '<category>' + data.category + '</category>' + LF; //TODO: Consider multiple categories
         item += TAB + TAB + TAB + '<pubDate>' + data.pubDate + '</pubDate>' + LF;
-        item += TAB + TAB + TAB + '<guid>' + data.guid + '</guid>' + LF;
+        item += TAB + TAB + TAB + '<guid isPermaLink="false">urn:uuid:' + data.guid + '</guid>' + LF;
         //optional values
         //See http://www.w3schools.com/rss/rss_item.asp
         if (data.comments) { //TODO: Consider DisqUs and Facebook comments

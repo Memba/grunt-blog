@@ -1,4 +1,4 @@
-title: Debugging and building grunt-blog
+title: Building and debugging grunt-blog
 description: Debugging and building grunt-blog
 author: john.doe@world.com (John Doe)
 
