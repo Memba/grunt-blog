@@ -2,22 +2,22 @@
   "name": "grunt-blog",
   "description": "A grunt plugin to generate blog indexes.",
   "version": "0.1.0",
-  "homepage": "https://github.com/jlchereau/grunt-blog",
+  "homepage": "https://github.com/memba/grunt-blog",
   "author": {
     "name": "Jacques L. Chereau",
     "email": "jlchereau@gmail.com"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/jlchereau/grunt-blog.git"
+    "url": "git://github.com/memba/grunt-blog.git"
   },
   "bugs": {
-    "url": "https://github.com/jlchereau/grunt-blog/issues"
+    "url": "https://github.com/memba/grunt-blog/issues"
   },
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/jlchereau/grunt-blog/blob/master/LICENSE-MIT"
+      "url": "https://raw.github.com/Memba/grunt-blog/master/LICENSE-MIT"
     }
   ],
   "main": "Gruntfile.js",
