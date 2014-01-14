@@ -1,6 +1,6 @@
 # grunt-blog
 
-> A grunt plugin to generate blog indexes.
+> A grunt plugin to organize content and generate indexes for [Memba Mini Blog Engine](http://miniblog.memba.com).
 
 ## Getting Started
 This plugin requires Grunt `~0.4.2`
