@@ -107,10 +107,12 @@ An md file is a text file with:
 
 For example:
 
+```shell
 title: my title
 description: my description
 
 Some markdown here
+```
 
 #### options.archive
 Type: `String`
