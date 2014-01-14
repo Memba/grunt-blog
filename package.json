@@ -1,7 +1,7 @@
 {
   "name": "grunt-blog",
   "description": "A grunt plugin to generate blog indexes.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "https://github.com/memba/grunt-blog",
   "author": {
     "name": "Jacques L. Chereau",
