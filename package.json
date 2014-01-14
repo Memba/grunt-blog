@@ -1,8 +1,8 @@
 {
   "name": "grunt-blog",
-  "description": "A grunt plugin to generate blog indexes.",
+  "description": "A grunt plugin to organize content and generate indexes for Memba Mini Blog Engine.",
   "version": "0.1.1",
-  "homepage": "https://github.com/memba/grunt-blog",
+  "homepage": "http://miniblog.memba.com",
   "author": {
     "name": "Jacques L. Chereau",
     "email": "jlchereau@gmail.com"
@@ -27,6 +27,9 @@
   "scripts": {
     "test": "grunt test"
   },
+  "dependencies": {
+    "date-format-lite": "~0.5.0"
+  },
   "devDependencies": {
     "grunt-contrib-jshint": "~0.6.0",
     "grunt-contrib-clean": "~0.4.0",
@@ -37,6 +40,7 @@
     "grunt": "~0.4.2"
   },
   "keywords": [
-    "gruntplugin"
+    "gruntplugin",
+    "blog"
   ]
 }
