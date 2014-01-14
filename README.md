@@ -8,7 +8,7 @@ This plugin works as a component of [Memba Mini Blog Engine](http://miniblog.mem
 
 1. Analysing and updating the markdown in all the md files located in the *new* directory,
 2. Copying the new updated files in a chronological hierarchy under the *archive* directory,
-3. Indexing these files in the form of an RSS file at the root of teh *archive* directory.
+3. Indexing these files in the form of an RSS file at the root of the *archive* directory.
 
 *Note: the plugin does not yet handle media files.*
 
@@ -27,7 +27,7 @@ Once the plugin has been installed, it may be enabled inside your project's Grun
 grunt.loadNpmTasks('grunt-blog');
 ```
 
-add configured bt adding a section named `blog` to the data object passed into `grunt.initConfig()`.
+add configured by adding a section named `blog` to the data object passed into `grunt.initConfig()`.
 
 ```js
 grunt.initConfig({
@@ -87,7 +87,7 @@ The route .
 Type: `String`
 Default value: `'index.rss'`
 
-A string value that is used to do something else with whatever else.
+The file name of the RSS index. Unless you dig into the code of Memba Mini Blog Engine, we recommend keeping the default value.
 
 ### File options
 
@@ -95,13 +95,28 @@ A string value that is used to do something else with whatever else.
 Type: `String`
 Default value: `'news'`
 
-A string value that is used to do something else with whatever else.
+The new directory containing the md files which should be added to the blog.
+
+An md file is a text file with:
+
+1. the *.md extension,
+2. meta data in the form key:value\n at the top
+2. [markdown] (http://daringfireball.net/projects/markdown/) at the bottom separated from the meta data by \n\n
+
+*Note: \n is a line feed*
+
+For example:
+
+title: my title
+description: my description
+
+Some markdown here
 
 #### options.archive
 Type: `String`
 Default value: `'archive'`
 
-A string value that is used to do something else with whatever else.
+The archive directory of published md files and media files organized chronologically by grunt-blog.
 
 ### RSS Options
 
@@ -111,7 +126,7 @@ For more information, see http://www.w3schools.com/rss/rss_channel.asp.
 Type: `String`
 Default value: `'Web Development'`
 
-The category the RSS channel belongs to. Also used as default category for items.
+The category the RSS channel belongs to. Also used as a default category for items.
 See http://www.w3schools.com/rss/rss_tag_category_channel.asp
 See http://www.w3schools.com/rss/rss_tag_category_item.asp
 
@@ -122,13 +137,14 @@ Type: `String`
 Default value: `'Copyright (c) 2013-2014 Memba. All rights reserved.'`
 
 A string value that is used to do something else with whatever else.
-http://www.w3schools.com/rss/rss_tag_copyright.asp
+See http://www.w3schools.com/rss/rss_tag_copyright.asp
 
 #### options.description
 Type: `String`
 Default value: `'A simple blog engine built around 4 components: (1) markdown content files, (2) a twitter bootstrap layout, (3) an RSS index built by a Grunt task and (4) Javascript widgets to display the markdown files as blog posts and the RSS feed as categorized and chronological indexes. Contrary to Octopress and other static web site generators, what you write is what you publish.'`
 
-A string value that is used to do something else with whatever else.
+A string value that describes the channel.
+See http://www.w3schools.com/rss/rss_tag_title_link_description_channel.asp
 
 #### options.docs
 Type: `String`
