@@ -28,8 +28,9 @@ module.exports = function(grunt) {
         // Merge task-specific and/or target-specific options with these defaults.
         var d = new Date(),
             options = this.options({
-                //configuration
-                home: 'http://localhost:63342/Blog/src/www/index.html',
+
+                //web site configuration
+                home: 'http://miniblog.memba.com',
                 route: '#/blog/',
                 index: 'index.rss',
 
@@ -37,24 +38,25 @@ module.exports = function(grunt) {
                 newsRoot: 'new',
                 archiveRoot: 'archive',
 
-                //RRS channel: http://www.w3schools.com/rss/rss_channel.asp
+                //RRS channel and items
+                //See: http://www.w3schools.com/rss/rss_channel.asp
                 category: 'Web Development',
                 //cloud: undefined,
                 copyright: 'Copyright (c) 2013-2014 Memba. All rights reserved.',
-                description: 'A simple blog engine built around 4 components: (1) markdown content files, (2) a twitter bootstrap layout, (3) an RSS index built by a Grunt task and (4) Javascript widgets to display the markdown files as blog posts and the RSS feed as categorized and chronological indexes. Contrary to Jekyll and other static web site generators, what you write is what you publish.',
+                description: 'A simple blog engine built around 4 components: (1) markdown content files, (2) a twitter bootstrap layout, (3) an RSS index built by a Grunt task and (4) Javascript widgets to display the markdown files as blog posts and the RSS feed as categorized and chronological indexes. Contrary to Octopress and other static web site generators, what you write is what you publish.',
                 docs: 'http://cyber.law.harvard.edu/rss/',
-                generator: 'http://blogengine.memba.com',
-                image: undefined, //TODO from Flickr
+                generator: 'http://miniblog.memba.com',
+                image: undefined, //TODO
                 language: 'en-US',
                 lastBuildDate: d.toISOString(),
-                link: 'http://blogengine.memba.com',
+                link: 'http://miniblog.memba.com',
                 managingEditor: 'Memba',
                 pubDate: d.toISOString(),
                 rating: undefined,
                 //skipDays: undefined,
                 //skipHours: undefined,
                 //textInput: undefined,
-                title: 'Memba Blog Engine',
+                title: 'Memba Mini Blog Engine',
                 ttl: '1440', //24 hours
                 webMaster: 'Memba'
             });
