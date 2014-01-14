@@ -17,6 +17,12 @@ exports.init = function(grunt) {
         SPACE = ' ';
 
     /**
+     * Adds Date.format function
+     * https://npmjs.org/package/date-format-lite
+     */
+    require("date-format-lite");
+
+    /**
      * Generate a random uuid.
      *
      * USAGE: Math.uuid(length, radix)
@@ -246,7 +252,7 @@ exports.init = function(grunt) {
             validation.errors.push('Missing link key:value in the md file. Required for an RSS item.');
         } else {
             if (options) {
-                metaData.link = options.home + options.route + new Date(metaData.pubDate).getFullYear().toString() + '/' + metaData.slug;
+                metaData.link = options.home + options.route + new Date(metaData.pubDate).format('YYYY/MM') + '/' + metaData.slug;
             } else {
                 validation.informations.push('Using recorded link: ' + metaData.link);
             }
@@ -282,7 +288,8 @@ exports.init = function(grunt) {
      * @param options
      */
     exports.getTargetPath = function(metaData, options) {
-        return path.join(options.archiveRoot, new Date(metaData.pubDate).getFullYear().toString(), metaData.slug + EXT);
+        //TODO: we could consider externalizing the 'YYYY/MM' section of the path as an option to offer more opportunity to structure directories and files
+        return path.join(options.archiveRoot, new Date(metaData.pubDate).format('YYYY/MM'), metaData.slug + EXT);
     };
 
     /**
