@@ -5,6 +5,7 @@
 ## Overview
 
 This plugin works as a component of [Memba Mini Blog Engine](http://miniblog.memba.com). It performs 3 tasks:
+
 1. Analysing and updating the markdown in all the md files located in the *new* directory,
 2. Copying the new updated files in a chronological hierarchy under the *archive* directory,
 3. Indexing these files in the form of an RSS file at the root of teh *archive* directory.
@@ -68,7 +69,7 @@ grunt.initConfig({
 
 ## The "blog" task configuration
 
-### Web site Options
+### Web site options
 
 #### options.home
 Type: `String`
@@ -190,8 +191,8 @@ Default value: `'Memba Mini Blog Engine'`
 A string value that is used to do something else with whatever else.
 
 #### options.ttl
-Type: `String`
-Default value: `'1440'`
+Type: `Number`
+Default value: `1440`
 
 A string value that is used to do something else with whatever else.
 

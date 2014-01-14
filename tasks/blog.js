@@ -57,7 +57,7 @@ module.exports = function(grunt) {
                 //skipHours: undefined,
                 //textInput: undefined,
                 title: 'Memba Mini Blog Engine',
-                ttl: '1440', //24 hours
+                ttl: 1440, //24 hours
                 webMaster: 'Memba'
             });
 
