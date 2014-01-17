@@ -2,6 +2,8 @@
 
 > A grunt plugin to organize content and generate indexes for [Memba Mini Blog Engine](http://miniblog.memba.com).
 
+[![NPM](https://nodei.co/npm/grunt-blog.png?downloads=true&stars=true)](https://npmjs.org/package/grunt-blog)
+
 ## Overview
 
 This plugin works as a component of [Memba Mini Blog Engine](http://miniblog.memba.com). It performs 3 tasks:
@@ -122,13 +124,17 @@ The archive directory of published md files and media files organized chronologi
 
 ### RSS Options
 
-For more information, see http://www.w3schools.com/rss/rss_channel.asp.
+For more information:
+
+See http://cyber.law.harvard.edu/rss/rss.html
+See http://www.w3schools.com/rss/rss_channel.asp.
 
 #### options.category
 Type: `String`
 Default value: `'Web Development'`
 
 The category the RSS channel belongs to. Also used as a default category for items.
+
 See http://www.w3schools.com/rss/rss_tag_category_channel.asp
 See http://www.w3schools.com/rss/rss_tag_category_item.asp
 
@@ -139,6 +145,7 @@ Type: `String`
 Default value: `'Copyright (c) 2013-2014 Memba. All rights reserved.'`
 
 A string value that is used to do something else with whatever else.
+
 See http://www.w3schools.com/rss/rss_tag_copyright.asp
 
 #### options.description
@@ -146,6 +153,7 @@ Type: `String`
 Default value: `'A simple blog engine built around 4 components: (1) markdown content files, (2) a twitter bootstrap layout, (3) an RSS index built by a Grunt task and (4) Javascript widgets to display the markdown files as blog posts and the RSS feed as categorized and chronological indexes. Contrary to Octopress and other static web site generators, what you write is what you publish.'`
 
 A string value that describes the channel.
+
 See http://www.w3schools.com/rss/rss_tag_title_link_description_channel.asp
 
 #### options.docs
