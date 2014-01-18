@@ -1,5 +1,3 @@
-title: Sample with images
-description: Description for a sample with images.
+description: Description for a sample without a title.
 
-Here are some images to test:
-![External Image without title]()
+Some content for a sample without a title.
