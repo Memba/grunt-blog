@@ -1,6 +1,6 @@
 # grunt-blog
 
-> A grunt plugin to organize content and generate indexes for [Memba Mini Blog Engine](http://miniblog.memba.com).
+> A grunt plugin to organize markdown content and generate indexes for [Memba Mini Blog Engine](http://miniblog.memba.com).
 
 [![NPM](https://nodei.co/npm/grunt-blog.png?downloads=true&stars=true)](https://npmjs.org/package/grunt-blog)
 
@@ -144,7 +144,7 @@ See http://www.w3schools.com/rss/rss_tag_category_item.asp
 Type: `String`
 Default value: `'Copyright (c) 2013-2014 Memba. All rights reserved.'`
 
-A string value that is used to do something else with whatever else.
+Notice of copyrighted material.
 
 See http://www.w3schools.com/rss/rss_tag_copyright.asp
 
@@ -152,81 +152,108 @@ See http://www.w3schools.com/rss/rss_tag_copyright.asp
 Type: `String`
 Default value: `'A simple blog engine built around 4 components: (1) markdown content files, (2) a twitter bootstrap layout, (3) an RSS index built by a Grunt task and (4) Javascript widgets to display the markdown files as blog posts and the RSS feed as categorized and chronological indexes. Contrary to Octopress and other static web site generators, what you write is what you publish.'`
 
-A string value that describes the channel.
+A description for the channel, used as a default description for items.
 
 See http://www.w3schools.com/rss/rss_tag_title_link_description_channel.asp
+See http://www.w3schools.com/rss/rss_tag_title_link_description_item.asp
 
 #### options.docs
 Type: `String`
 Default value: `'http://cyber.law.harvard.edu/rss/'`
 
-A string value that is used to do something else with whatever else.
+URL to the documentation of the format used in the RSS feed.
+
+See http://www.w3schools.com/rss/rss_tag_docs.asp
 
 #### options.generator
 Type: `String`
 Default value: `'http://miniblog.memba.com'`
 
-A string value that is used to do something else with whatever else.
+Program used to generate the RSS feed.
+
+See http://www.w3schools.com/rss/rss_tag_generator.asp
 
 #### options.image
 Type: `String`
-Default value: `undefined`
+Default value: `'http://miniblog.memba.com/styles/images/logo.png'`
 
-A string value that is used to do something else with whatever else.
+Image to display when aggregators present a feed.
+
+http://www.w3schools.com/rss/rss_tag_image.asp
 
 #### options.language
 Type: `String`
 Default value: `'en-US'`
 
-A string value that is used to do something else with whatever else.
+The language the channel is written in.
+
+See http://www.w3schools.com/rss/rss_tag_language.asp
 
 #### options.lastBuildDate
 Type: `Date`
 Default value: `new Date().toISOString()`
 
-A string value that is used to do something else with whatever else.
+Last modified-date for the content in the RSS feed.
+
+See http://www.w3schools.com/rss/rss_tag_lastbuilddate.asp
 
 #### options.link
 Type: `String`
-Default value: `'http://miniblog.memba.com'`
+Default value: `'http://miniblog.memba.com/posts/index.rss'`
 
-A string value that is used to do something else with whatever else.
+A link to the channel.
+
+See http://www.w3schools.com/rss/rss_tag_title_link_description_channel.asp
+See http://www.w3schools.com/rss/rss_tag_title_link_description_item.asp
 
 #### options.managingEditor
 Type: `String`
 Default value: `'Memba'`
 
-A string value that is used to do something else with whatever else.
+E-mail address for the editor of the content of the feed, also used as default for item authors.
+
+http://www.w3schools.com/rss/rss_tag_managingeditor.asp
 
 #### options.pubDate
 Type: `Date`
 Default value: `new Date().toISOString()`
 
-A string value that is used to do something else with whatever else.
+Last publication date for the content in the RSS feed.
+
+See: http://www.w3schools.com/rss/rss_tag_pubdate.asp
 
 #### options.rating
 Type: `String`
 Default value: `undefined`
 
-A string value that is used to do something else with whatever else.
+The PICS rating of the feed.
+
+See: http://www.tutorialspoint.com/rss/pics-ratings.htm
 
 #### options.title
 Type: `String`
 Default value: `'Memba Mini Blog Engine'`
 
-A string value that is used to do something else with whatever else.
+A title for the channel.
+
+See http://www.w3schools.com/rss/rss_tag_title_link_description_channel.asp
+See http://www.w3schools.com/rss/rss_tag_title_link_description_item.asp
 
 #### options.ttl
 Type: `Number`
 Default value: `1440`
 
-A string value that is used to do something else with whatever else.
+The <ttl> (ttl=time to live) element specifies the number of minutes the feed can stay cached before refreshing it from the source.
+
+See http://www.w3schools.com/rss/rss_tag_ttl.asp
 
 #### options.webMaster
 Type: `String`
 Default value: `'Memba'`
 
-A string value that is used to do something else with whatever else.
+E-mail address to the webmaster of the feed.
+
+See http://www.w3schools.com/rss/rss_tag_webmaster.asp
 
 ### Usage Example
 
