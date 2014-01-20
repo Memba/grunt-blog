@@ -261,7 +261,7 @@ In this example, we show you the typical configuration you should be considering
 grunt.initConfig({
   blog: {
     options: {
-          home: 'http://yoursite/blog/index.html', //The path to your Mini Blog Engine
+          home: 'http://yoursite/index.html', //The path to your Mini Blog Engine
           newsRoot: 'news', //your news directory
           postsRoot: 'posts', //your posts directory
           title: 'Your title for your RSS channel',
