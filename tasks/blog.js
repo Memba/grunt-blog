@@ -23,7 +23,7 @@ module.exports = function(grunt) {
     /**
      * grunt.registerMultiTask
      */
-    grunt.registerMultiTask('blog', 'A grunt plugin to generate an RSS index of Markdown files for a Memba Blog.', function() {
+    grunt.registerMultiTask('blog', 'A grunt plugin to organize markdown content and generate indexes for Memba Mini Blog Engine.', function() {
 
         // Merge task-specific and/or target-specific options with these defaults.
         var d = new Date(),
@@ -35,21 +35,21 @@ module.exports = function(grunt) {
                 index: 'index.rss',
 
                 //directories to process
-                newsRoot: 'new',
-                archiveRoot: 'archive',
+                newsRoot: 'news',
+                postsRoot: 'posts',
 
                 //RRS channel and items
                 //See: http://www.w3schools.com/rss/rss_channel.asp
                 category: 'Web Development',
                 //cloud: undefined,
                 copyright: 'Copyright (c) 2013-2014 Memba. All rights reserved.',
-                description: 'A simple blog engine built around 4 components: (1) markdown content files, (2) a twitter bootstrap layout, (3) an RSS index built by a Grunt task and (4) Javascript widgets to display the markdown files as blog posts and the RSS feed as categorized and chronological indexes. Contrary to Octopress and other static web site generators, what you write is what you publish.',
+                description: 'A static blog engine which displays live markdown content (What You Write Is What You Publish).',
                 docs: 'http://cyber.law.harvard.edu/rss/',
                 generator: 'http://miniblog.memba.com',
-                image: undefined, //TODO
+                image: 'http://miniblog.memba.com/styles/images/logo.png',
                 language: 'en-US',
                 lastBuildDate: d.toISOString(),
-                link: 'http://miniblog.memba.com',
+                link: 'http://miniblog.memba.com/posts/index.rss',
                 managingEditor: 'Memba',
                 pubDate: d.toISOString(),
                 rating: undefined,
@@ -88,9 +88,11 @@ module.exports = function(grunt) {
                     metaData = util.getMetaData(stream),
                     markDown = util.getMarkDown(stream);
                 log.startProgress('Processing ' + path);
+                var enclosures = util.processEnclosures(markDown, options);
+                //Add enclosure to metaData
                 validation = util.validateMetaData(metaData, options);
                 log.endProgress(validation);
-                //Copy file to destination
+                //Copy files to destination
                 var buffer = util.assemble (metaData, markDown),
                     target = util.getTargetPath(metaData, options);
                 if (grunt.file.exists(target)) {
@@ -102,13 +104,14 @@ module.exports = function(grunt) {
         });
 
         /**
-         * Reading and validating archives...
+         * Reading and validating existing posts...
          */
-        log.h2('Reading and validating archives...');
+        log.h2('Reading and validating existing posts...');
         var items = [],
-            archive = grunt.file.expand({ filter: 'isFile'}, options.archiveRoot + '/**/*.md');
-        log.debug(archive);
-        archive.forEach(function(path) {
+            posts = grunt.file.expand({ filter: 'isFile'}, options.postsRoot + '/**/*.md');
+        log.debug(posts);
+        posts.forEach(function(path) {
+            //TODO: Process links and identify orphans
             if (grunt.file.isFile(path)) {
                 var stream = grunt.file.read(path),
                     metaData = util.getMetaData(stream);

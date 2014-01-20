@@ -12,8 +12,6 @@ This plugin works as a component of [Memba Mini Blog Engine](http://miniblog.mem
 2. Copying the new updated files in a chronological hierarchy under the *posts* directory,
 3. Indexing these files in the form of an RSS file at the root of the *posts* directory.
 
-*Note: the plugin does not yet handle media files.*
-
 ## Getting Started
 This plugin requires Grunt `~0.4.2`
 
@@ -150,7 +148,7 @@ See http://www.w3schools.com/rss/rss_tag_copyright.asp
 
 #### options.description
 Type: `String`
-Default value: `'A simple blog engine built around 4 components: (1) markdown content files, (2) a twitter bootstrap layout, (3) an RSS index built by a Grunt task and (4) Javascript widgets to display the markdown files as blog posts and the RSS feed as categorized and chronological indexes. Contrary to Octopress and other static web site generators, what you write is what you publish.'`
+Default value: `'A static blog engine which displays live markdown content (What You Write Is What You Publish).'`
 
 A description for the channel, used as a default description for items.
 
