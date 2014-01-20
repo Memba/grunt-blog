@@ -144,7 +144,7 @@ module.exports = function(grunt) {
             indexRss = rss.getFilePath(options);
         index += rss.startChannel(options);
         items.forEach(function(item) {
-            index += rss.addItem(item);
+            index += rss.addItem(item, options);
         });
         index += rss.endChannel();
         index += rss.endFeed();

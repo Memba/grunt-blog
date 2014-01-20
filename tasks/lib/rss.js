@@ -52,7 +52,7 @@ exports.init = function(grunt) {
             channel += TAB + TAB + '<image>' + LF;
             channel += TAB + TAB + TAB + '<url>' + options.image + '</url>' + LF;
             channel += TAB + TAB + TAB + '<title>' + options.title + '</title>' + LF;
-            channel += TAB + TAB + TAB + '<link>' + options.link + '</link>' + LF;
+            channel += TAB + TAB + TAB + '<link>' + options.home + '</link>' + LF;
             channel += TAB + TAB + '</image>' + LF;
         }
         if (options.language) {
@@ -74,12 +74,12 @@ exports.init = function(grunt) {
         return channel;
     };
 
-    exports.addItem = function(data) {
+    exports.addItem = function(data, options) {
         grunt.verbose.debug (MODULE + 'Add Item');
         var item = TAB + TAB + '<item>' + LF;
         //mandatory values by RSS specification (title, link, description)
         item += TAB + TAB + TAB + '<title>' + data.title + '</title>' + LF;
-        item += TAB + TAB + TAB + '<link>' + data.link + '</link>' + LF;
+        item += TAB + TAB + TAB + '<link>' + options.home + data.link + '</link>' + LF;
         item += TAB + TAB + TAB + '<description><![CDATA[' + data.description + ']]></description>' + LF;
         //mandatory values by our own specs
         item += TAB + TAB + TAB + '<author>' + data.author + '</author>' + LF;
