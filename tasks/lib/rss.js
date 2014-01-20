@@ -31,7 +31,7 @@ exports.init = function(grunt) {
         var channel = TAB + '<channel>' + LF;
         //mandatory values by RSS specification (title, link, description)
         channel += TAB + TAB + '<title>' + options.title + '</title>' + LF;
-        channel += TAB + TAB + '<link>' + options.home + options.link + '</link>' + LF;
+        channel += TAB + TAB + '<link>' + options.link + '</link>' + LF;
         channel += TAB + TAB + '<description><![CDATA[' + options.description + ']]></description>' + LF;
         //mandatory values by our own specs
         channel += TAB + TAB + '<generator>' + options.generator + '</generator>' + LF;
@@ -52,7 +52,7 @@ exports.init = function(grunt) {
             channel += TAB + TAB + '<image>' + LF;
             channel += TAB + TAB + TAB + '<url>' + options.image + '</url>' + LF;
             channel += TAB + TAB + TAB + '<title>' + options.title + '</title>' + LF;
-            channel += TAB + TAB + TAB + '<link>' + options.imageUrl + '</link>' + LF;
+            channel += TAB + TAB + TAB + '<link>' + options.link + '</link>' + LF;
             channel += TAB + TAB + '</image>' + LF;
         }
         if (options.language) {
