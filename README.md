@@ -8,9 +8,9 @@
 
 This plugin works as a component of [Memba Mini Blog Engine](http://miniblog.memba.com). It performs 3 tasks:
 
-1. Analysing and updating the markdown in all the md files located in the *new* directory,
-2. Copying the new updated files in a chronological hierarchy under the *archive* directory,
-3. Indexing these files in the form of an RSS file at the root of the *archive* directory.
+1. Analysing and updating the markdown in all the md files located in the *news* directory,
+2. Copying the new updated files in a chronological hierarchy under the *posts* directory,
+3. Indexing these files in the form of an RSS file at the root of the *posts* directory.
 
 *Note: the plugin does not yet handle media files.*
 
@@ -43,7 +43,7 @@ grunt.initConfig({
       //
       //File options
       newsRoot: '...',
-      archiveRoot: '...',
+      postsRoot: '...',
       //
       //RSS options
       category: '...',
@@ -93,11 +93,11 @@ The file name of the RSS index. Unless you dig into the code of Memba Mini Blog 
 
 ### File options
 
-#### options.news
+#### options.newsRoot
 Type: `String`
 Default value: `'news'`
 
-The new directory containing the md files which should be added to the blog.
+The directory containing the new md files which should be added as posts to the blog.
 
 An md file is a text file with:
 
@@ -116,11 +116,11 @@ description: my description
 Some markdown here
 ```
 
-#### options.archive
+#### options.postsRoot
 Type: `String`
-Default value: `'archive'`
+Default value: `'posts'`
 
-The archive directory of published md files and media files organized chronologically by grunt-blog.
+The directory of published md files and media files organized chronologically by grunt-blog.
 
 ### RSS Options
 
@@ -237,8 +237,8 @@ grunt.initConfig({
   blog: {
     options: {
           home: 'http://yoursite/blog/index.html', //The path to your Mini Blog Engine
-          newsRoot: 'new', //your news directory
-          archiveRoot: 'archive', //your archive directory
+          newsRoot: 'news', //your news directory
+          postsRoot: 'posts', //your posts directory
           title: 'Your title for your RSS channel',
           link: 'http://yoursite',
           description: 'Your description for your RSS channel',
@@ -255,3 +255,5 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 _v0.1.2_ First functional release (more testing/polishing/documenting required though)
+_v0.1.3_ Documentation and image processing completed (more on the way though)
+
