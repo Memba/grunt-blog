@@ -11,10 +11,14 @@
 exports.init = function(grunt) {
     var exports = {},
         path = require('path'),
-        EXT = '.md',
+        MD = 'md',
         LF = '\n',
         COLON = ':',
-        SPACE = ' ';
+        SPACE = ' ',
+        DOT = '.',
+        SLASH = '/',
+        BACKSLASH = '\\',
+        ROOT = DOT + SLASH;
 
     /**
      * Adds Date.format function
@@ -252,7 +256,7 @@ exports.init = function(grunt) {
             validation.errors.push('Missing link key:value in the md file. Required for an RSS item.');
         } else {
             if (options) {
-                metaData.link = options.route + new Date(metaData.pubDate).format('YYYY/MM') + '/' + metaData.slug;
+                metaData.link = options.route + new Date(metaData.pubDate).format('YYYY/MM') + SLASH + metaData.slug;
             } else {
                 validation.informations.push('Using recorded link: ' + metaData.link);
             }
@@ -263,22 +267,51 @@ exports.init = function(grunt) {
 
     /**
      * Process image (and video) enclosures
+     * @param directory
      * @param markDown
      * @param options
      * @returns {Array}
      */
-    exports.processEnclosures = function(markDown, options) {
-        //TODO: videos
-        var ret = [];
-        //   !\[[^\]]*\]\(([^\)\"]*)(\"[^\"]*\")?\)
-        var rx1 = /!\[[^\]]*\]\(([^\)\"]*)(\"[^\"]*\")?\)/g;
+    exports.processEnclosures = function(directory, markDown, metaData, options) {
+        var ret = { markDown: markDown, src: [], dest: []};
+        var rx1 = /(!\[[^\]]*\]\()([^\)\"\s]*)([\s]*\"[^\"]*\")?(\))/g;
         var tags = markDown.match(rx1);
         if (tags && tags.length > 0) {
             var rx2 = new RegExp(rx1.source); //remove global modifier
-            tags.forEach(function(tag) {
-                var matches = rx2.exec(tag);
-                ret.push(matches[1]);
-            });
+            var index = 0;
+            for (var i=0; i<tags.length; i++) {
+                var srcTag = tags[i],
+                    matches = rx2.exec(srcTag),
+                    srcPath = matches[2],
+                    pos = srcPath.lastIndexOf(DOT);
+                // Identifies 5 capturing groups:
+                // For example, let's take tag = '![Local image](blue-ball.png "Memba Logo")'
+                // matches[0] = '![Local image](blue-ball.png "Memba Logo")'
+                // matches[1] = '![Local image]('
+                // matches[2] = 'blue-ball.png'
+                // matches[3] = ' "Memba Logo"' or undefined if there is no optional title
+                // matches[4] = ')'
+                if ((srcPath.length < 7 || (srcPath.substr(0, 7) !== 'http://' && srcPath.substr(0, 8) !== 'https://')) //local image
+                    && pos > 0 && pos < srcPath.length - 1 //known extension
+                    && ret.src.indexOf(srcPath) === -1) //not a duplicate
+                {
+                    var istr = ('000' + (i + 1)),
+                        destPath = path.join(options.postsRoot, new Date(metaData.pubDate).format('YYYY/MM'), metaData.slug + '-' + istr.substr(istr.length - 3, 3) + srcPath.substr(pos)),
+                        destUrl = exports.getTargetUrl(destPath, options),
+                        destTag = srcTag.replace(rx2, '$1' + destUrl + '$3$4'),
+                        rx3 = srcTag.replace('[', '\\[').replace(']', '\\]').replace('(', '\\(').replace(')', '\\)');
+                    ret.src.push(path.join(directory, srcPath));
+                    ret.dest.push(destPath);
+                    ret.markDown = ret.markDown.replace(new RegExp(rx3, 'gm'), destTag);
+                    if (!metaData.enclosure) { //use the first image as enclosure
+                        metaData.enclosure = destUrl;
+                    }
+                } else if (srcPath.substr(0, 7) === 'http://' || srcPath.substr(0, 8) === 'https://') { //remote image
+                    if (!metaData.enclosure) { //use the first image as enclosure
+                        metaData.enclosure = srcPath; //TODO videos
+                    }
+                }
+            }
         }
         return ret;
     };
@@ -306,13 +339,45 @@ exports.init = function(grunt) {
     };
 
     /**
+     * Returns the directory of a path
+     * @param path
+     * @returns {string}
+     */
+    exports.getDirectory = function(path) {
+        if (grunt.file.isDir(path)) {
+            return path;
+        } else {
+            var pos = Math.max(path.lastIndexOf(SLASH), path.lastIndexOf(BACKSLASH));
+            if (pos > 0) {
+                var ret = path.substr(0, pos);
+                if (grunt.file.isDir(ret)) {
+                    return ret;
+                }
+            }
+        }
+        return undefined;
+    };
+
+    /**
      * Get the target path to write to
      * @param metaData
      * @param options
+     * @returns {string}
      */
     exports.getTargetPath = function(metaData, options) {
         //TODO: we could consider externalizing the 'YYYY/MM' section of the path as an option to offer more opportunity to structure directories and files
-        return path.join(options.postsRoot, new Date(metaData.pubDate).format('YYYY/MM'), metaData.slug + EXT);
+        return path.join(options.postsRoot, new Date(metaData.pubDate).format('YYYY/MM'), metaData.slug + DOT + MD);
+    };
+
+    /**
+     * Get the target Url from a target path
+     * @param path
+     * @param options
+     * @returns {string}
+     */
+    exports.getTargetUrl = function(path, options) {
+        //TODO: use options to check path root
+        return ROOT + path.replace(/\\/gm, SLASH);
     };
 
     /**

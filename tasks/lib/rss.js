@@ -94,7 +94,7 @@ exports.init = function(grunt) {
         if (typeof data.enclosure === 'string') { //TODO: Handle enclosures
             var contentType, pos = data.enclosure.lastIndexOf('.');
             if (pos > 0 && pos < data.enclosure.length - 1) {
-                switch(data.enclosure.substr(pos)) {
+                switch(data.enclosure.substr(pos + 1)) {
                     case 'gif':
                         contentType = 'image/gif';
                         break;
@@ -110,7 +110,7 @@ exports.init = function(grunt) {
                 }
                 if (contentType) {
                     //<enclosure url="http://www.w3schools.com/rss/rss.mp3" length="0" type="audio/mpeg" />
-                    item += TAB + TAB + TAB + '<enclosure url=""' + data.enclosure + '" length="0" type="' + contentType + '" />' + LF;
+                    item += TAB + TAB + TAB + '<enclosure url="' + data.enclosure + '" length="0" type="' + contentType + '" />' + LF;
                 }
             }
         }

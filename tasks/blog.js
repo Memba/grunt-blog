@@ -85,20 +85,34 @@ module.exports = function(grunt) {
         news.forEach(function(path) {
             if (grunt.file.isFile(path)) {
                 var stream = grunt.file.read(path),
+                    directory = util.getDirectory(path),
                     metaData = util.getMetaData(stream),
                     markDown = util.getMarkDown(stream);
                 log.startProgress('Processing ' + path);
-                var enclosures = util.processEnclosures(markDown, options);
-                //Add enclosure to metaData
                 validation = util.validateMetaData(metaData, options);
+                //Process and add enclosures to metaData
+                var enclosures = util.processEnclosures(directory, markDown, metaData, options); //TODO: candidate for a callback
+                markDown = enclosures.markDown;
                 log.endProgress(validation);
-                //Copy files to destination
+                //Copy markdown file to destination
                 var buffer = util.assemble (metaData, markDown),
                     target = util.getTargetPath(metaData, options);
                 if (grunt.file.exists(target)) {
                     log.warn('File already exists: ' + target);
                 } else {
                     grunt.file.write(target, buffer);
+                }
+                //Copy enclosures
+                for(var i=0; i<enclosures.src.length; i++) {
+                    if (grunt.file.exists(enclosures.dest[i])) {
+                        log.warn('File already exists: ' + enclosures.dest[i]);
+                    } else {
+                        if (grunt.file.exists(enclosures.src[i])) {
+                            grunt.file.copy(enclosures.src[i], enclosures.dest[i]);
+                        } else {
+                            log.warn('Missing file ' + enclosures.src[i]);
+                        }
+                    }
                 }
             }
         });
