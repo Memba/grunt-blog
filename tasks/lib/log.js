@@ -8,6 +8,8 @@
 
 "use strict";
 
+//TODO: write a verbose log file
+
 exports.init = function(grunt) {
     var exports = {},
         H2 = '= ',

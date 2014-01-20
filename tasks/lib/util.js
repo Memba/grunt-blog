@@ -154,11 +154,11 @@ exports.init = function(grunt) {
         if (options.newsRoot && !grunt.file.isDir(options.newsRoot)) {
             validation.warnings.push('Directory newsRoot [' + options.newsRoot + '] does not exist. New posts cannot be processed.');
         }
-        if (!options.archiveRoot) {
-            validation.errors.push('Missing option archiveRoot. An index cannot be built.');
+        if (!options.postsRoot) {
+            validation.errors.push('Missing option postsRoot. An index cannot be built.');
         }
-        if (options.archiveRoot && !grunt.file.isDir(options.archiveRoot)) {
-            validation.errors.push('Directory archiveRoot [' + options.archiveRoot + '] does not exist. An index cannot be built.');
+        if (options.postsRoot && !grunt.file.isDir(options.postsRoot)) {
+            validation.errors.push('Directory postsRoot [' + options.postsRoot + '] does not exist. An index cannot be built.');
         }
         if (!options.title) {
             validation.errors.push('Missing option title. Required for an RSS channel.');
@@ -237,7 +237,7 @@ exports.init = function(grunt) {
                 metaData.pubDate = options.pubDate;
                 validation.informations.push('Missing pubDate key:value in the md file. A pubDate has been generated from option pubDate.');
             } else {
-                validation.errors.push('Missing pubDate key:value in the md file. We need one to index archives.');
+                validation.errors.push('Missing pubDate key:value in the md file. We need one to index posts.');
             }
         }
         if (!metaData.guid) { //TODO: check valid guid
@@ -252,7 +252,7 @@ exports.init = function(grunt) {
             validation.errors.push('Missing link key:value in the md file. Required for an RSS item.');
         } else {
             if (options) {
-                metaData.link = options.home + options.route + new Date(metaData.pubDate).format('YYYY/MM') + '/' + metaData.slug;
+                metaData.link = options.route + new Date(metaData.pubDate).format('YYYY/MM') + '/' + metaData.slug;
             } else {
                 validation.informations.push('Using recorded link: ' + metaData.link);
             }
@@ -260,6 +260,29 @@ exports.init = function(grunt) {
         //TODO: Important: comments, enclosures, source
         return validation;
     };
+
+    /**
+     * Process image (and video) enclosures
+     * @param markDown
+     * @param options
+     * @returns {Array}
+     */
+    exports.processEnclosures = function(markDown, options) {
+        //TODO: videos
+        var ret = [];
+        //   !\[[^\]]*\]\(([^\)\"]*)(\"[^\"]*\")?\)
+        var rx1 = /!\[[^\]]*\]\(([^\)\"]*)(\"[^\"]*\")?\)/g;
+        var tags = markDown.match(rx1);
+        if (tags && tags.length > 0) {
+            var rx2 = new RegExp(rx1.source); //remove global modifier
+            tags.forEach(function(tag) {
+                var matches = rx2.exec(tag);
+                ret.push(matches[1]);
+            });
+        }
+        return ret;
+    };
+
 
     /**
      * Reassemble updated metaData and markDown
@@ -289,7 +312,7 @@ exports.init = function(grunt) {
      */
     exports.getTargetPath = function(metaData, options) {
         //TODO: we could consider externalizing the 'YYYY/MM' section of the path as an option to offer more opportunity to structure directories and files
-        return path.join(options.archiveRoot, new Date(metaData.pubDate).format('YYYY/MM'), metaData.slug + EXT);
+        return path.join(options.postsRoot, new Date(metaData.pubDate).format('YYYY/MM'), metaData.slug + EXT);
     };
 
     /**

@@ -17,7 +17,7 @@ exports.init = function(grunt) {
         MODULE = 'rss.js: ';
 
     exports.getFilePath = function(options) {
-        return path.join(options.archiveRoot, options.index);
+        return path.join(options.postsRoot, options.index);
     };
 
     exports.startFeed = function() {
@@ -31,7 +31,7 @@ exports.init = function(grunt) {
         var channel = TAB + '<channel>' + LF;
         //mandatory values by RSS specification (title, link, description)
         channel += TAB + TAB + '<title>' + options.title + '</title>' + LF;
-        channel += TAB + TAB + '<link>' + options.link + '</link>' + LF;
+        channel += TAB + TAB + '<link>' + options.home + options.link + '</link>' + LF;
         channel += TAB + TAB + '<description><![CDATA[' + options.description + ']]></description>' + LF;
         //mandatory values by our own specs
         channel += TAB + TAB + '<generator>' + options.generator + '</generator>' + LF;
@@ -91,11 +91,30 @@ exports.init = function(grunt) {
         if (data.comments) { //TODO: Consider DisqUs and Facebook comments
             item += TAB + TAB + TAB + '<comments>' + data.comments + '</comments>' + LF;
         }
-        if (data.enclosure) { //TODO: Handle enclosures
-            //<enclosure url="http://www.w3schools.com/rss/rss.mp3" length="0" type="audio/mpeg" />
-            //item += TAB + TAB + TAB + '<author>' + data.author + '</author>' + LF;
+        if (typeof data.enclosure === 'string') { //TODO: Handle enclosures
+            var contentType, pos = data.enclosure.lastIndexOf('.');
+            if (pos > 0 && pos < data.enclosure.length - 1) {
+                switch(data.enclosure.substr(pos)) {
+                    case 'gif':
+                        contentType = 'image/gif';
+                        break;
+                    case 'jpg':
+                    case 'jpeg':
+                        contentType = 'image/jpeg';
+                        break;
+                    case 'png':
+                        contentType = 'image/png';
+                        break;
+                    case 'svg':
+                        contentType = 'image/svg+xml';
+                }
+                if (contentType) {
+                    //<enclosure url="http://www.w3schools.com/rss/rss.mp3" length="0" type="audio/mpeg" />
+                    item += TAB + TAB + TAB + '<enclosure url=""' + data.enclosure + '" length="0" type="' + contentType + '" />' + LF;
+                }
+            }
         }
-        if (data.source) {
+        if (typeof data.source === 'string') {
             item += TAB + TAB + TAB + '<source>' + data.source + '</source>' + LF;
         }
         item += TAB + TAB + '</item>' + LF;
