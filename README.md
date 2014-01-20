@@ -177,7 +177,7 @@ Default value: `'http://miniblog.memba.com/styles/images/logo.png'`
 
 Image to display when aggregators present a feed.
 
-http://www.w3schools.com/rss/rss_tag_image.asp
+See http://www.w3schools.com/rss/rss_tag_image.asp
 
 #### options.language
 Type: `String`
