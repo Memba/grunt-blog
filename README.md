@@ -91,6 +91,14 @@ The file name of the RSS index. Unless you dig into the code of Memba Mini Blog 
 
 ### File options
 
+#### options.homeRoot
+Type: `String`
+Default value: `''`
+
+Location of index.html.
+
+This is the portion of options.newsRoot and options.archive that we should remove to build relative paths to display media files.
+
 #### options.newsRoot
 Type: `String`
 Default value: `'news'`
