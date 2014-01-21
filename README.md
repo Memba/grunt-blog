@@ -97,7 +97,7 @@ Default value: `''`
 
 Location of index.html.
 
-This is the portion of options.newsRoot and options.archive that we should remove to build relative paths to display media files.
+This is the portion of options.newsRoot and options.postsRoot that we should remove to build relative paths to display media files.
 
 #### options.newsRoot
 Type: `String`
