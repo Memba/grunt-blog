@@ -36,12 +36,19 @@ module.exports = function(grunt) {
         }
       },
       */
+      root_options: {
+            options: {
+                homeRoot: 'src/',
+                newsRoot: 'src/news/',
+                postsRoot: 'src/posts/'
+            }
+      } /*,
       custom_options: {
         options: {
             newsRoot: 'test/fixtures',
             postsRoot: 'temp'
         }
-      }
+      }*/
     },
 
     // Unit tests.
