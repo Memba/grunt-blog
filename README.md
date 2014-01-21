@@ -27,7 +27,7 @@ Once the plugin has been installed, it may be enabled inside your project's Grun
 grunt.loadNpmTasks('grunt-blog');
 ```
 
-add configured by adding a section named `blog` to the data object passed into `grunt.initConfig()`.
+and configured by adding a section named `blog` to the data object passed into `grunt.initConfig()`.
 
 ```js
 grunt.initConfig({
@@ -40,6 +40,7 @@ grunt.initConfig({
       index: '...',
       //
       //File options
+      homeRoot: '...'
       newsRoot: '...',
       postsRoot: '...',
       //
@@ -61,7 +62,7 @@ grunt.initConfig({
       webMaster: '...'
     },
     your_target: {
-      // Target-specific file lists and/or options go here.
+      // Target-specific options go here.
     },
   },
 });
