@@ -35,6 +35,7 @@ module.exports = function(grunt) {
                 index: 'index.rss',
 
                 //directories to process
+                homeRoot: '', //location of index.html
                 newsRoot: 'news',
                 postsRoot: 'posts',
 

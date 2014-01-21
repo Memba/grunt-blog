@@ -174,7 +174,7 @@ exports.init = function(grunt) {
             validation.errors.push('Missing option description. Required for an RSS channel.');
         }
         if (!options.generator) {
-            validation.warnings.push('Missing option generator. Please keep the link to http://blogengine.memba.com');
+            validation.warnings.push('Missing option generator. Please keep the link to http://miniblog.memba.com');
         }
         if (!options.managingEditor) {
             validation.errors.push('Missing option managingEditor. We need one in case you forget the author in markdown files');
@@ -316,7 +316,6 @@ exports.init = function(grunt) {
         return ret;
     };
 
-
     /**
      * Reassemble updated metaData and markDown
      * @param metaData
@@ -376,8 +375,15 @@ exports.init = function(grunt) {
      * @returns {string}
      */
     exports.getTargetUrl = function(path, options) {
-        //TODO: use options to check path root
-        return ROOT + path.replace(/\\/gm, SLASH);
+        var url = path.replace(/\\/gm, SLASH),
+            homeRoot = options.homeRoot.trim().replace(/\\/gm, SLASH);
+        if (homeRoot.length > 0) {
+            var pos = url.indexOf(homeRoot);
+            if (pos === 0) {
+                url = url.substr(homeRoot.length);
+            }
+        }
+        return (ROOT + url).replace(/\/\//gm, SLASH); //replace double slashes
     };
 
     /**
