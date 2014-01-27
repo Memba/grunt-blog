@@ -1,6 +1,6 @@
 /*
  * grunt-blog
- * http://blogdev.memba.com
+ * http://miniblog.memba.com
  *
  * Copyright (c) 2013-2014 Memba. All rights reserved
  * Licensed under the MIT license.
@@ -267,8 +267,10 @@ exports.init = function(grunt) {
 
     /**
      * Process image (and video) enclosures
+     * @method processEnclosures
      * @param directory
      * @param markDown
+     * @param metaData
      * @param options
      * @returns {Array}
      */
@@ -278,7 +280,6 @@ exports.init = function(grunt) {
         var tags = markDown.match(rx1);
         if (tags && tags.length > 0) {
             var rx2 = new RegExp(rx1.source); //remove global modifier
-            var index = 0;
             for (var i=0; i<tags.length; i++) {
                 var srcTag = tags[i],
                     matches = rx2.exec(srcTag),

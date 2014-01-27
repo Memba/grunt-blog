@@ -14,7 +14,7 @@ module.exports = function(grunt) {
     var log = require('./lib/log').init(grunt);
     var util = require('./lib/util').init(grunt);
     var rss = require('./lib/rss').init(grunt);
-
+    var sitemap = require('./lib/sitemap').init(grunt);
 
     // Please see the Grunt documentation for more information regarding task
     // creation: http://gruntjs.com/creating-tasks
@@ -31,13 +31,14 @@ module.exports = function(grunt) {
 
                 //web site configuration
                 home: 'http://miniblog.memba.com',
-                route: '#/blog/',
+                route: '#!/blog/',
                 index: 'index.rss',
+                sitemap: 'sitemap.xml',
 
                 //directories to process
-                homeRoot: '', //location of index.html
-                newsRoot: 'news',
-                postsRoot: 'posts',
+                homeRoot: '', //location of index.html and sitemap.zml
+                newsRoot: 'news', //location of new posts to process
+                postsRoot: 'posts', //location of processed posts and index.rss
 
                 //RRS channel and items
                 //See: http://www.w3schools.com/rss/rss_channel.asp
@@ -142,13 +143,25 @@ module.exports = function(grunt) {
          */
         log.h2('Building the RSS Index ...');
         var index = rss.startFeed(),
-            indexRss = rss.getFilePath(options);
+            indexFile = rss.getFilePath(options);
         index += rss.startChannel(options);
         items.forEach(function(item) {
             index += rss.addItem(item, options);
         });
         index += rss.endChannel();
         index += rss.endFeed();
-        grunt.file.write(indexRss, index);
+        grunt.file.write(indexFile, index);
+
+        /**
+         * Building the Site Map ...
+         */
+        log.h2('Building the Site Map ...');
+        var map = sitemap.startSiteMap(),
+            mapFile = sitemap.getFilePath(options);
+        items.forEach(function(item) {
+            map += sitemap.addUrl(item, options);
+        });
+        map += sitemap.endSiteMap();
+        grunt.file.write(mapFile, map);
     });
 };

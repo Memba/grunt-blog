@@ -38,9 +38,9 @@ module.exports = function(grunt) {
       */
       root_options: {
             options: {
-                homeRoot: 'src/',
-                newsRoot: 'src/news/',
-                postsRoot: 'src/posts/'
+                homeRoot: 'temp/',
+                newsRoot: 'test/fixtures/',
+                postsRoot: 'temp/'
             }
       } /*,
       custom_options: {

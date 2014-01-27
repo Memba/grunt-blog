@@ -38,6 +38,7 @@ grunt.initConfig({
       home: '...',
       route: '...',
       index: '...',
+      sitemap: '...',
       //
       //File options
       homeRoot: '...'
@@ -88,7 +89,13 @@ The route .
 Type: `String`
 Default value: `'index.rss'`
 
-The file name of the RSS index. Unless you dig into the code of Memba Mini Blog Engine, we recommend keeping the default value.
+The file name of the RSS index located in options.postsRoot. Unless you dig into the code of Memba Mini Blog Engine, we recommend keeping the default value.
+
+#### options.sitemap
+Type: `String`
+Default value: `'sitemap.xml'`
+
+The file name of the XML sitemap located in options.homeRoot. Unless you dig into the code of Memba Mini Blog Engine, we recommend keeping the default value.
 
 ### File options
 
