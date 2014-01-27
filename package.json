@@ -1,7 +1,7 @@
 {
   "name": "grunt-blog",
   "description": "A grunt plugin to organize content and generate indexes for Memba Mini Blog Engine.",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "homepage": "http://miniblog.memba.com",
   "author": {
     "name": "Jacques L. Chereau",
