@@ -83,7 +83,13 @@ The home of your blog where index.html can be reached.
 Type: `String`
 Default value: `'#/blog/'`
 
-The route .
+The SPA route to blog posts, e.g.: `'http://miniblog.memba.com#/blog/2013/11/vision-for-a-new-blog-engine'`
+
+#### options.query
+Type: `String`
+Default value: `'?r='`
+
+The replacement for '#' to access blog posts via query strings, e.g.: `'http://miniblog.memba.com?r=/blog/2013/11/vision-for-a-new-blog-engine'`
 
 #### options.index
 Type: `String`
@@ -295,6 +301,6 @@ grunt.initConfig({
 In lieu of a formal style guide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
-_v0.1.2_ First functional release (more testing/polishing/documenting required though)
-_v0.1.3_ Documentation and image processing completed (more on the way though)
-
+- _v0.1.5_ Readme and image processing (enclosures)
+- _v0.1.6_ Sitemap generation and test of hashbangs
+- _v0.1.7_ Another SEO Test: combination of hash routes and query string sitemap

@@ -26,13 +26,41 @@ exports.init = function(grunt) {
                '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + LF ;
     };
 
-    exports.addUrl = function(data, options) {
-        grunt.verbose.debug (MODULE + 'Add Url');
+    exports.addHome = function(options) {
+        grunt.verbose.debug (MODULE + 'Add Root');
         var item = TAB + '<url>' + LF;
         //mandatory values by sitemap specification (loc)
-        item += TAB + TAB + '<loc>' + options.home + data.link + '</loc>' + LF;
+        item += TAB + TAB + '<loc>' + options.home + '</loc>' + LF;
         //optional values - See http://www.sitemaps.org/protocol.html
-        item += TAB + TAB + '<lastmod>' + data.pubDate + '</lastmod>' + LF;
+        //item += TAB + TAB + '<lastmod>' + data.pubDate + '</lastmod>' + LF;
+        //item += TAB + TAB + '<changefreq>' + ???? + '</changefreq>' + LF;
+        //item += TAB + TAB + '<priority>' + ????? + '</priority>' + LF;
+        item += TAB + '</url>' + LF;
+        return item;
+    };
+
+    exports.addPost = function(data, options) {
+        grunt.verbose.debug (MODULE + 'Add Post');
+        var item = TAB + '<url>' + LF;
+        //mandatory values by sitemap specification (loc)
+        //item += TAB + TAB + '<loc>' + options.home + options.query + encodeURIComponent(data.link.substr(1)) + '</loc>' + LF;
+        item += TAB + TAB + '<loc>' + options.home + options.query + data.link.substr(1) + '</loc>' + LF;
+        //optional values - See http://www.sitemaps.org/protocol.html
+        //item += TAB + TAB + '<lastmod>' + data.pubDate + '</lastmod>' + LF;
+        //item += TAB + TAB + '<changefreq>' + ???? + '</changefreq>' + LF;
+        //item += TAB + TAB + '<priority>' + ????? + '</priority>' + LF;
+        item += TAB + '</url>' + LF;
+        return item;
+    };
+
+    exports.addPage = function(data, options) {
+        grunt.verbose.debug (MODULE + 'Add Post');
+        var item = TAB + '<url>' + LF;
+        //mandatory values by sitemap specification (loc)
+        //item += TAB + TAB + '<loc>' + options.home + options.query + encodeURIComponent(data.link.substr(1)) + '</loc>' + LF;
+        item += TAB + TAB + '<loc>' + options.home + options.query + data.link.substr(1) + '</loc>' + LF;
+        //optional values - See http://www.sitemaps.org/protocol.html
+        //item += TAB + TAB + '<lastmod>' + data.pubDate + '</lastmod>' + LF;
         //item += TAB + TAB + '<changefreq>' + ???? + '</changefreq>' + LF;
         //item += TAB + TAB + '<priority>' + ????? + '</priority>' + LF;
         item += TAB + '</url>' + LF;

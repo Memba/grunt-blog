@@ -31,7 +31,8 @@ module.exports = function(grunt) {
 
                 //web site configuration
                 home: 'http://miniblog.memba.com',
-                route: '#!/blog/',
+                route: '#/blog/',
+                query: '?r=',
                 index: 'index.rss',
                 sitemap: 'sitemap.xml',
 
@@ -158,8 +159,9 @@ module.exports = function(grunt) {
         log.h2('Building the Site Map ...');
         var map = sitemap.startSiteMap(),
             mapFile = sitemap.getFilePath(options);
+        map += sitemap.addHome(options);
         items.forEach(function(item) {
-            map += sitemap.addUrl(item, options);
+            map += sitemap.addPost(item, options);
         });
         map += sitemap.endSiteMap();
         grunt.file.write(mapFile, map);

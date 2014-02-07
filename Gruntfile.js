@@ -40,7 +40,8 @@ module.exports = function(grunt) {
             options: {
                 homeRoot: 'temp/',
                 newsRoot: 'test/fixtures/',
-                postsRoot: 'temp/'
+                postsRoot: 'temp/posts',
+                pagesRoot: 'temp/pages'
             }
       } /*,
       custom_options: {
