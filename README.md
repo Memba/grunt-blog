@@ -1,12 +1,26 @@
-# grunt-blog
+# DEPRECATED: grunt-blog
 
-> A grunt plugin to organize markdown content and generate indexes for [Memba Mini Blog Engine](http://miniblog.memba.com).
+```
+****************************************************************************************
+* WARNING: DEPRECATD                                                                   *
+* We wanted Jekyll without a build procedure for every modification                    *
+* In other words, we wanted live merging between markdown and html tenmplates          *
+* We hoped to be able to achieve that with a client-side SPA architecture              *
+* but search engine bots are poor at crawling dynamic content                          *
+* Good SEO requires a server-side architecture                                         *
+* Memba Blog Engine v0.0.1 can still be used with grunt-blog but do not expect         *
+* the generated blog to be indexed by search engines                                   *
+* Newer releases of Memba Blog Engine do not make use of grunt-blog                    *
+****************************************************************************************
+```
+
+> A grunt plugin to organize markdown content and generate indexes for [Memba Blog Engine](https://github.com/Memba/Memba-Blog).
 
 [![NPM](https://nodei.co/npm/grunt-blog.png?downloads=true&stars=true)](https://npmjs.org/package/grunt-blog)
 
 ## Overview
 
-This plugin works as a component of [Memba Mini Blog Engine](http://miniblog.memba.com). It performs 3 tasks:
+This plugin works as a component of [Memba Blog Engine](https://github.com/Memba/Memba-Blog). It performs 3 tasks:
 
 1. Analysing and updating the markdown in all the md files located in the *news* directory,
 2. Copying the new updated files in a chronological hierarchy under the *posts* directory,
